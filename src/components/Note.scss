@@ -1,24 +1,86 @@
 .note {
-  width: 14rem;
-  height: 5rem;
-  background-color: rgb(198 198 198);
+  width: 16rem;
+  min-height: 8rem;
+  background: white;
+  border-radius: 12px;
+  padding: 1.2rem;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border-left: 4px solid #4361ee; // Akzentfarbe
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  }
 
   .textMessage {
-    margin-left: 0.2rem;
-    overflow-wrap: break-word; // Besser als word-wrap
-    word-break: break-word; // Bessere Silbentrennung
-    hyphens: auto; // Automatische Silbentrennung (falls gewünscht)
+    color: #333;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+    margin: 0;
+    padding: 0.4rem 0;
+  }
+
+  .note-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
   }
 
   .del_btn {
-    height: 1rem;
-    width: 1rem;
-    background-color: lightcoral;
-    border: 0;
-    margin-top: 0.2rem;
-    margin-right: 0.2rem;
-    border-radius: 25px;
+    width: 1.8rem;
+    height: 1.8rem;
+    background: #ff6b6b;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: #ff5252;
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      width: 12px;
+      height: 2px;
+      background: white;
+    }
+
+    &::before {
+      transform: rotate(45deg);
+    }
+
+    &::after {
+      transform: rotate(-45deg);
+    }
+  }
+
+  .note-date {
+    font-size: 0.75rem;
+    color: #6c757d;
   }
 }
+
+// .textMessage {
+//   margin-left: 0.2rem;
+//   overflow-wrap: break-word; // Besser als word-wrap
+//   word-break: break-word; // Bessere Silbentrennung
+//   hyphens: auto; // Automatische Silbentrennung (falls gewünscht)
+// }
