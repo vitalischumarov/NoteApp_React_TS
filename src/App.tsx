@@ -14,21 +14,29 @@ interface Note {
 type NoteState = Note[];
 
 type Action =
-  | { type: "ADD"; payload: string }
+  | { type: "ADD"; payload: Note }
   | { type: "DELETE"; payload: number };
 
 //DAS IST DIE REDUCERFUNCTION, DIE JE NACH TYPE EINE FUNKTION AUSFUEHRT
 function reducer(notes: NoteState, action: Action) {
   if (action.type === "ADD") {
-    return notes;
+    const newNote = {
+      id: action.payload.id,
+      note: action.payload.note,
+    };
+    return [...notes, newNote];
   } else if (action.type === "DELETE") {
-    return notes;
+    const filteredNotes: Note[] = notes.filter(
+      (note) => note.id !== action.payload
+    );
+    return filteredNotes;
   } else {
     return notes;
   }
 }
 
 // DA DER CONTEXT NUR EINEN DATENTYPEN AUFNEHMEN KANN, MUESSEN DIE BEIDEN DATENTYPEN IN EIN TYP ZUSAMMENGEFASST WERDEN
+//DIE BEIDEN ATTRIBUTE ALLNOTE & DISPATCH WERDEN MIT DEM CONTEXT UEBERGEBEN UND MUESSEN AUCH SO HEISSEN
 type ContextType = {
   allNotes: NoteState;
   //DISPATCH<ACTION>: DIE DISPATCH-FUNKTION KANN NUR TYPEN VON ACTION AUFNEHMEN
@@ -36,7 +44,7 @@ type ContextType = {
 };
 
 //HIER WIRD DER CONTEXT DEFINIERT, AUF DEN DIE CHILDS ZUGRIFF HABEN SOLLEN
-const NoteContext = createContext<ContextType | undefined>(undefined);
+export const NoteContext = createContext<ContextType | undefined>(undefined);
 
 function App() {
   //USEREDUCER: ALS DATENTYPEN WERDEN DIE TYPEN VERWENDET, DIE IN DER REDUCERFUNKTION ALS PARAMATER UEBERGEBEN WERDEN

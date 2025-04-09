@@ -1,13 +1,37 @@
 import "./Header.scss";
-
-import Input from "./Input";
-import Button from "./Button";
+import { useContext, useState } from "react";
+import { NoteContext } from "../App";
 
 function Header() {
+  const context = useContext(NoteContext);
+  const [input, setInput] = useState("");
+
+  function saveNote() {
+    context?.dispatch({
+      type: "ADD",
+      payload: { id: Math.random(), note: input },
+    });
+    setInput("");
+  }
+
+  function handleChange(
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) {
+    setInput(event.target.value);
+  }
+
   return (
     <div className="header">
-      <Input></Input>
-      <Button></Button>
+      <input
+        className="textField"
+        type="text"
+        value={input}
+        onChange={handleChange}
+        name="textNote"
+      ></input>
+      <button onClick={saveNote} className="addBtn">
+        +
+      </button>
     </div>
   );
 }

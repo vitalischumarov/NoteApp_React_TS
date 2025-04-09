@@ -4,4 +4,21 @@
   background-color: rgb(198 198 198);
   display: flex;
   justify-content: space-between;
+
+  .textMessage {
+    margin-left: 0.2rem;
+    overflow-wrap: break-word; // Besser als word-wrap
+    word-break: break-word; // Bessere Silbentrennung
+    hyphens: auto; // Automatische Silbentrennung (falls gewünscht)
+  }
+
+  .del_btn {
+    height: 1rem;
+    width: 1rem;
+    background-color: lightcoral;
+    border: 0;
+    margin-top: 0.2rem;
+    margin-right: 0.2rem;
+    border-radius: 25px;
+  }
 }

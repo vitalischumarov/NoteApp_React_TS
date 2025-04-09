@@ -3,4 +3,16 @@
   flex-direction: row;
   gap: 1rem;
   margin-top: 2rem;
+
+  .textField {
+    height: 3rem;
+    width: 15rem;
+  }
+
+  .addBtn {
+    background-color: green;
+    border: 0;
+    width: 3rem;
+    border-radius: 2rem;
+  }
 }

@@ -1,5 +1,6 @@
 import "./Note.scss";
-import Button from "./Button";
+import { useContext } from "react";
+import { NoteContext } from "../App";
 
 interface NoteProp {
   message: string;
@@ -7,12 +8,20 @@ interface NoteProp {
 }
 
 function Note({ message, id }: NoteProp) {
-  console.log(message);
-  console.log(id);
+  const context = useContext(NoteContext);
+  const deleteNote = () => {
+    context?.dispatch({
+      type: "DELETE",
+      payload: id,
+    });
+  };
+
   return (
     <div className="note">
-      <div>{message}</div>
-      <Button></Button>
+      <div className="textMessage">{message}</div>
+      <button className="del_btn" onClick={deleteNote}>
+        -
+      </button>
     </div>
   );
 }
