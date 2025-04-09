@@ -1,20 +1,23 @@
-import { useReducer } from "react";
+import { useReducer, createContext, Dispatch } from "react";
 import "./App.scss";
 import "./components/globalStyle.scss";
 import Header from "./components/Header";
 import Note from "./components/Note";
 
+//DAS IST DAS OBJEKT, WELCHES GESPEICHERT WIRD
 interface Note {
   id: number;
   note: string;
 }
 
+//DAS IST DER TYP, DER IM STATE GESPEICHERT WIRD
 type NoteState = Note[];
 
 type Action =
   | { type: "ADD"; payload: string }
   | { type: "DELETE"; payload: number };
 
+//DAS IST DIE REDUCERFUNCTION, DIE JE NACH TYPE EINE FUNKTION AUSFUEHRT
 function reducer(notes: NoteState, action: Action) {
   if (action.type === "ADD") {
     return notes;
@@ -25,7 +28,18 @@ function reducer(notes: NoteState, action: Action) {
   }
 }
 
+// DA DER CONTEXT NUR EINEN DATENTYPEN AUFNEHMEN KANN, MUESSEN DIE BEIDEN DATENTYPEN IN EIN TYP ZUSAMMENGEFASST WERDEN
+type ContextType = {
+  allNotes: NoteState;
+  //DISPATCH<ACTION>: DIE DISPATCH-FUNKTION KANN NUR TYPEN VON ACTION AUFNEHMEN
+  dispatch: Dispatch<Action>;
+};
+
+//HIER WIRD DER CONTEXT DEFINIERT, AUF DEN DIE CHILDS ZUGRIFF HABEN SOLLEN
+const NoteContext = createContext<ContextType | undefined>(undefined);
+
 function App() {
+  //USEREDUCER: ALS DATENTYPEN WERDEN DIE TYPEN VERWENDET, DIE IN DER REDUCERFUNKTION ALS PARAMATER UEBERGEBEN WERDEN
   const [allNotes, dispatch] = useReducer<React.Reducer<NoteState, Action>>(
     reducer,
     [
@@ -37,12 +51,14 @@ function App() {
   return (
     <div className="app">
       <h1 className="text">Note App with React and TypeScript</h1>
-      <Header></Header>
-      <div className="allNotes">
-        {allNotes.map((singeNote: Note) => {
-          return <Note message={singeNote.note} id={singeNote.id}></Note>;
-        })}
-      </div>
+      <NoteContext.Provider value={{ allNotes, dispatch }}>
+        <Header></Header>
+        <div className="allNotes">
+          {allNotes.map((singeNote: Note) => {
+            return <Note message={singeNote.note} id={singeNote.id}></Note>;
+          })}
+        </div>
+      </NoteContext.Provider>
     </div>
   );
 }
