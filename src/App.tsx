@@ -1,6 +1,5 @@
 import { useReducer, createContext, Dispatch } from "react";
 import "./App.scss";
-import "./components/globalStyle.scss";
 import Header from "./components/Header";
 import Note from "./components/Note";
 
@@ -50,10 +49,7 @@ function App() {
   //USEREDUCER: ALS DATENTYPEN WERDEN DIE TYPEN VERWENDET, DIE IN DER REDUCERFUNKTION ALS PARAMATER UEBERGEBEN WERDEN
   const [allNotes, dispatch] = useReducer<React.Reducer<NoteState, Action>>(
     reducer,
-    [
-      { note: "hallo", id: 1 },
-      { note: "guten Tag", id: 2 },
-    ]
+    []
   );
 
   return (
