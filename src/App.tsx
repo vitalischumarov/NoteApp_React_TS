@@ -20,14 +20,19 @@ function reducer(notes: NoteState, action: Action) {
     return notes;
   } else if (action.type === "DELETE") {
     return notes;
+  } else {
+    return notes;
   }
 }
 
 function App() {
-  const [allNotes, dispatch] = useReducer(reducer, [
-    { note: "hallo", id: 1 },
-    { note: "guten Tag", id: 2 },
-  ]);
+  const [allNotes, dispatch] = useReducer<React.Reducer<NoteState, Action>>(
+    reducer,
+    [
+      { note: "hallo", id: 1 },
+      { note: "guten Tag", id: 2 },
+    ]
+  );
 
   return (
     <div className="app">
